@@ -1,0 +1,33 @@
+{
+  "name": "rsjproject",
+  "version": "1.0.0",
+  "description": "reflexivity in javascript object",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hajahim/ReflexiveJS.git"
+  },
+  "keywords": [
+    "JS",
+    "object",
+    "database"
+  ],
+  "author": "mihaja Rajaonarivelo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hajahim/ReflexiveJS/issues"
+  },
+  "homepage": "https://github.com/hajahim/ReflexiveJS#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "cookie-parser": "^1.4.3",
+    "express": "^4.16.3",
+    "http": "0.0.0",
+    "mssql": "^4.1.0",
+    "path": "^0.12.7",
+    "pug": "^2.0.3"
+  }
+}
