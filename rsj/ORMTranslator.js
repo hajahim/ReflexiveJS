@@ -1,3 +1,7 @@
+const MSSQLConnector = require( "../database/mssql/MSSQLConnector" );
+
+const DataBaseConnector = MSSQLConnector;
+
 class ORMTranslator {
 
   static convertObjectToQueryString( classToMap  ) {
@@ -5,7 +9,8 @@ class ORMTranslator {
   }
 
   static findAll( classToMap ) {
-
+    const result = DataBaseConnector.queryDatabase( `select * from ${classToMap}` );
+    return result;
   }
 
 }

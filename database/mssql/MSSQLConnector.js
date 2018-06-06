@@ -1,5 +1,4 @@
-const sql = require('mssql')
-import MSSQLDriver from "mssql";
+const MSSQLDriver = require( "mssql" );
 
 let Connection = null;
 
@@ -7,25 +6,27 @@ class MSSQLConnector {
 
   static getConfiguration() {
     return {
-      user: "",
-      password: "",
-      server: "",
-      database: ""
+      user: "sa",
+      password: "Asdcxz1+",
+      server: "localhost",
+      database: "RSJDatabase"
     }
   }
 
   static getConnection() {
     try {
       if( Connection === null )
-        pool = MSSQLDriver.connect( this.getConfiguration() );
+        Connection = MSSQLDriver.connect( this.getConfiguration() );
     } catch ( ConnectionDatabaseException ) {
       throw new Error( `Database connect exception : ${ConnectionDatabaseException}` );
     }
-    return pool;
+    return Connection;
   }
 
   static queryDatabase( query ) {
-    const [resolve, reject] = {};
+    debugger;
+    let resolve = function() {};
+    let reject = function() {};
     let queryResult = new Promise( resolve, reject );
     try {
       const connection = this.getConnection();
@@ -43,4 +44,4 @@ class MSSQLConnector {
 
 }
 
-export default MSSQLConnector;
+module.exports = MSSQLConnector;

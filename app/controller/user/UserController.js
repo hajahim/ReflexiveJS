@@ -5,7 +5,7 @@ class UserController {
   static index( request, response ) {
     const user = new User();
     const userList = user.selectAll();
-    response.render('pages/index.pug');
+    response.render('pages/index.pug', { userList : userList } );
   }
 
 }
