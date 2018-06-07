@@ -9,7 +9,10 @@ class MSSQLConnector {
       user: "sa",
       password: "Asdcxz1+",
       server: "localhost",
-      database: "RSJDatabase"
+      database: "RSJDatabase",
+      options: {
+        encrypt: true // Use this if you're on Windows Azure
+      }
     }
   }
 
@@ -24,18 +27,15 @@ class MSSQLConnector {
   }
 
   static queryDatabase( query ) {
-    debugger;
-    let resolve = function() {};
-    let reject = function() {};
-    let queryResult = new Promise( resolve, reject );
+    let queryResult = null;
     try {
       const connection = this.getConnection();
-      connection.then( dbInstance => {
-        queryResult.resolve( dbInstance.request()
-          .query( query )
-        )
-      }).catch( function( DatabaseQueryException ) {
-        queryResult.reject( DatabaseQueryException );
+      queryResult = new Promise( ( resolve, reject ) => {
+        connection.then( dbInstance => {
+          resolve( dbInstance.request()
+            .query( query )
+          )
+        })
       });
     } catch ( DatabaseQueryException ) {
       queryResult.reject( DatabaseQueryException );

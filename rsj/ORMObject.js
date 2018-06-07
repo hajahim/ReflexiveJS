@@ -9,8 +9,7 @@ const ORMObject = classCaller =>
 
     selectAll() {
       let result = [];
-      const objectName = this.constructor.name;
-      result = ORMTranslator.findAll( objectName );
+      result = ORMTranslator.findAll( this );
       return result;
     }
 

@@ -4,13 +4,18 @@ const DataBaseConnector = MSSQLConnector;
 
 class ORMTranslator {
 
-  static convertObjectToQueryString( classToMap  ) {
-    
+  static convertObjectToQueryString( objectToMap  ) {
+    const tableName = objectToMap.constructor.name;
   }
 
-  static findAll( classToMap ) {
-    const result = DataBaseConnector.queryDatabase( `select * from ${classToMap}` );
+  static findAll( objectToMap ) {
+    const className = objectToMap.constructor.name;
+    const result = DataBaseConnector.queryDatabase( `select * from ${className}` );
     return result;
+  }
+
+  static findByParameter( objectToMap ) {
+
   }
 
 }

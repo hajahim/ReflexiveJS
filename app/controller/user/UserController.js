@@ -1,10 +1,13 @@
-const User = require( "../../model/User" );
+const Personne = require( "../../model/Personne" );
 
 class UserController {
 
   static index( request, response ) {
-    const user = new User();
-    const userList = user.selectAll();
+    const personne = new Personne();
+    const userList = personne.selectAll();
+    userList.then( function( list ) {
+      console.warn( list );
+    });
     response.render('pages/index.pug', { userList : userList } );
   }
 
