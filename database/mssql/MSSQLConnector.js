@@ -34,6 +34,8 @@ class MSSQLConnector {
         queryResult.resolve( dbInstance.request()
           .query( query )
         )
+      }).catch( function( DatabaseQueryException ) {
+        queryResult.reject( DatabaseQueryException );
       });
     } catch ( DatabaseQueryException ) {
       queryResult.reject( DatabaseQueryException );
