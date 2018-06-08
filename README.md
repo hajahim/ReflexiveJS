@@ -1,3 +1,5 @@
+[![Code Climate](https://codeclimate.com/github/boennemann/badges.svg)](https://codeclimate.com/github/boennemann/badges) [![NPM version](https://badge.fury.io/js/badge-list.svg)](http://badge.fury.io/js/badge-list)
+
 # ReflexiveJS #
 
 This is a library for ORM (Database and object) interaction implement with Javascript.
