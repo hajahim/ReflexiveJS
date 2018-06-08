@@ -18,3 +18,23 @@ When object extends this framework, it automatically have the CRUD action functi
 - **find()**
 - **delete()**
 - **update()**
+
+## Question? ##
+
+Please ask questions on StackOverflow and be sure to include the parsley.js tag. Please provide an example, starting for example from this jsfiddle
+
+## Install dev environment and running tests ##
+
+Before using this framework, please make sure that:
+
+> npm install
+
+## Run tests ##
+
+In command line, type :
+
+> node app.js
+
+And open in browser :
+
+> http://localhost:3000/
