@@ -35,6 +35,9 @@ class MSSQLConnector {
           resolve( dbInstance.request()
             .query( query )
           )
+          reject( function() {
+            throw new Error("Can't connect to DB") 
+          })
         })
       });
     } catch ( DatabaseQueryException ) {

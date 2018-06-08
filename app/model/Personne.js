@@ -12,6 +12,10 @@ class Personne extends ORMObject( ORMInheritance ) {
     this.age = age;
   }
 
+  getId() {
+    return "idUser";
+  }
+
 }
 
 module.exports = Personne;

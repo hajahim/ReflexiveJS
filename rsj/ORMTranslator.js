@@ -8,7 +8,11 @@ class ORMTranslator {
 
   static findAll( objectToMap ) {
     const className = objectToMap.constructor.name;
-    const result = DataBaseConnector.queryDatabase( `select * from ${className}` );
+    let result = new Promise( resolve, reject => {
+      DataBaseConnector.queryDatabase( `SELECT * from ${className}` ).then( queryResult => {
+
+      })
+    });
     return result;
   }
 
@@ -22,7 +26,24 @@ class ORMTranslator {
   }
 
   static saveObjectToDatabase( currentObject ) {
-    const className = objectToMap.constructor.name;
+    const className = currentObject.constructor.name;
+    const placeholder = ObjectHelpers.generateInsertPlaceholder( currentObject );
+    let query = "INSERT INTO " + className + " OUTPUT Inserted." + currentObject.getId() + " VALUES (" + placeholder + ")";
+    const objectProperties = Object.keys( currentObject );
+    const objectValues = objectProperties.slice( 1, objectProperties.length ).map( function( attribute ) {
+      return "'" + currentObject[attribute] + "'";
+    });
+    query = StringHelpers.replacePlaceholder( query, objectValues );
+    return DataBaseConnector.queryDatabase( query );
+  }
+
+  static deleteObject( currentObject ) {
+    const tableName = currentObject.constructor.name;
+    let databaseQuery = " DELETE FROM " + tableName;
+    const whereClausseArray = ObjectHelpers.generateWhereClause( currentObject );
+    if( whereClausseArray.length > 0 )
+      databaseQuery += " WHERE " + whereClausseArray.join( " AND " );
+    return DataBaseConnector.queryDatabase( databaseQuery );
   }
 
 }

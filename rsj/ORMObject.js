@@ -12,7 +12,7 @@ const ORMObject = classCaller =>
     }
 
     delete() {
-
+      return ORMTranslator.deleteObject( this );
     }
 
     update() {
@@ -20,7 +20,18 @@ const ORMObject = classCaller =>
     }
 
     save() {
-
+      let result = null;
+      result = new Promise( ( resolve, reject ) => {
+        ORMTranslator.saveObjectToDatabase( this ).then( queryResult => {
+          const userID = queryResult.recordset[0].idUser;
+          const userToFind = new this.constructor( userID );
+          resolve( userToFind.find() );
+          reject( () => {
+            throw new Error( "Object cannot be find" );
+          });
+        });
+      });
+      return result;
     }
 
   };
