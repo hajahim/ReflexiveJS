@@ -1,14 +1,33 @@
 const ORMTranslator = require( "./ORMTranslator" );
+const ObjectHelpers = require( "./helpers/ObjectHelpers" );
 
 const ORMObject = classCaller =>
   class extends classCaller {
 
     find() {
-      return ORMTranslator.findByParameter( this );
+      return new Promise( ( resolve, reject ) => {
+        ORMTranslator.findByParameter( this ).then( queryResult => {
+          resolve( ObjectHelpers.convertQueryResultToObject( queryResult.recordset[0], this ) );
+          reject( () => {
+            throw new Error( "Query Exception" );
+          });
+        });
+      });
     }
 
     findAll() {
-      return ORMTranslator.findAll( this );
+      return new Promise( ( resolve, reject ) => {
+        ORMTranslator.findAll( this ).then( queryResult => {
+          const retour = [];
+          queryResult.recordset.map( resultRow => {
+            retour.push( ObjectHelpers.convertQueryResultToObject( resultRow, this ) );
+          });
+          resolve( retour );
+          reject( () => {
+            throw new Error( "Query Exception" );
+          });
+        });
+      });
     }
 
     delete() {

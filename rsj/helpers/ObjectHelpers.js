@@ -31,13 +31,12 @@ class ObjectHelpers {
   }
 
   static convertQueryResultToObject( queryResult, objectType ) {
-    const retour = [];
-    queryResult.recordset.forEach( resultRow => {
-      const newObject = new objectType.constructor();
-      const objectKeys = Object.keys( resultRow );
-      
+    const newObject = new objectType.constructor();
+    const objectAttributes = Object.keys( newObject );
+    objectAttributes.map( attribute => {
+      newObject[ attribute ] = queryResult[ attribute ];
     });
-    return retour;
+    return newObject;
   }
 
 }

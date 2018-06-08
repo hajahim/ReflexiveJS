@@ -8,11 +8,7 @@ class ORMTranslator {
 
   static findAll( objectToMap ) {
     const className = objectToMap.constructor.name;
-    let result = new Promise( resolve, reject => {
-      DataBaseConnector.queryDatabase( `SELECT * from ${className}` ).then( queryResult => {
-
-      })
-    });
+    const result = DataBaseConnector.queryDatabase( `SELECT * from ${className}` );
     return result;
   }
 

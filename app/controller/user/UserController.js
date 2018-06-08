@@ -6,7 +6,7 @@ class UserController {
     const personne = new Personne();
     const userList = personne.findAll();
     userList.then( function( list ) {
-      response.render('pages/index.pug', { userList : list.recordset } );
+      response.render('pages/index.pug', { userList : list } );
     });
   }
 
@@ -16,7 +16,7 @@ class UserController {
     const personne = new Personne( userID );
     const userToFind = personne.find();
     userToFind.then( function( currentUser ) {
-      response.render('pages/user/information.pug', { user : currentUser.recordset[0] } );
+      response.render('pages/user/information.pug', { user : currentUser } );
     });
   }
 
@@ -32,7 +32,7 @@ class UserController {
     let user = new Personne( null, userName, userPrenom, userAge );
     user = user.save();
     user.then( function( currentUser ) {
-      response.render('pages/user/information.pug', { user : currentUser.recordset[0] } );
+      response.render('pages/user/information.pug', { user : currentUser } );
     });
   }
 
@@ -45,8 +45,7 @@ class UserController {
       const personne = new Personne();
       const userList = personne.findAll();
       userList.then( function( list ) {
-        console.warn( list );
-        response.render('pages/index.pug', { user : list.recordset } );
+        response.render('pages/index.pug', { user : list } );
       });
     });
   }
