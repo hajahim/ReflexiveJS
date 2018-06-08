@@ -4,13 +4,11 @@ const ORMObject = classCaller =>
   class extends classCaller {
 
     find() {
-
+      return ORMTranslator.findByParameter( this );
     }
 
-    selectAll() {
-      let result = [];
-      result = ORMTranslator.findAll( this );
-      return result;
+    findAll() {
+      return ORMTranslator.findAll( this );
     }
 
     delete() {

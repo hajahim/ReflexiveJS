@@ -4,11 +4,20 @@ class UserController {
 
   static index( request, response ) {
     const personne = new Personne();
-    const userList = personne.selectAll();
+    const userList = personne.findAll();
     userList.then( function( list ) {
-      console.warn( list );
+      response.render('pages/index.pug', { userList : list.recordset } );
     });
-    response.render('pages/index.pug', { userList : userList } );
+  }
+
+  static userInformation( request, response ) {
+    const userID = request.params.id;
+    const currentUser = {};
+    const personne = new Personne( userID );
+    const userToFind = personne.find();
+    userToFind.then( function( currentUser ) {
+      response.render('pages/user/information.pug', { user : currentUser.recordset[0] } );
+    });
   }
 
 }

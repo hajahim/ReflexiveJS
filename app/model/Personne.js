@@ -4,11 +4,12 @@ class ORMInheritance {}
 
 class Personne extends ORMObject( ORMInheritance ) {
   
-  constructor() {
+  constructor( userID = null, nom = null, prenom = null, age = null ) {
     super();
-    this.nom = "";
-    this.prenom = ""
-    this.age = "";
+    this.idUser = userID;
+    this.nom = nom;
+    this.prenom = prenom;
+    this.age = age;
   }
 
 }

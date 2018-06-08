@@ -7,4 +7,4 @@ block main
       .col-lg-12
         h1 Welcome to RSJ extension
         for user in userList
-          p= user.nom
+          +renderUserInformation( user )
