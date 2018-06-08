@@ -1,0 +1,20 @@
+extends ../_base/layout.pug
+
+block main
+
+  .container
+    .row
+      .col-lg-12
+        h1 Create User
+        form( action="/user/save" method="POST" )
+          fieldset
+            label nom : 
+            input( type="text" name="nom" )
+          fieldset
+            label prenom : 
+            input( type="text" name="prenom" )
+          fieldset
+            label age : 
+            input( type="number" name="age" )
+          p
+            input( type="submit" value="Sauvegarder" )
