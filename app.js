@@ -20,8 +20,7 @@ app.use(
   sassMiddleware({
       src: path.join( __dirname, 'app/views/styles/scss' ),
       dest: path.join( __dirname, 'app/views/styles/css' ),
-      outputStyle: 'compressed',
-      debug: true    
+      outputStyle: 'compressed'
   })
 );
 

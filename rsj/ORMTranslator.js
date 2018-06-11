@@ -53,6 +53,18 @@ class ORMTranslator {
     return DataBaseConnector.queryDatabase( databaseQuery );
   }
 
+  static checkingObjectSubscription( currentObject ) {
+    const tableName = currentObject.constructor.name;
+    let databaseQuery = "SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = '" + tableName + "'";
+    return DataBaseConnector.queryDatabase( databaseQuery );
+  }
+
+  static createTable( currentObject ) {
+    const tableName = currentObject.constructor.name;
+    let databaseQuery = "CREATE TABLE " + tableName + " ( ";
+    const prototypeReading = currentObject.constructor.toString();
+  }
+
 }
 
 module.exports = ORMTranslator;

@@ -18,6 +18,7 @@ const ORMObject = classCaller =>
     findAll() {
       return new Promise( ( resolve, reject ) => {
         ORMTranslator.findAll( this ).then( queryResult => {
+          this.suscribe();
           const retour = [];
           queryResult.map( resultRow => {
             retour.push( ObjectHelpers.convertQueryResultToObject( resultRow, this ) );
@@ -57,8 +58,7 @@ const ORMObject = classCaller =>
     }
 
     save() {
-      let result = null;
-      result = new Promise( ( resolve, reject ) => {
+      return new Promise( ( resolve, reject ) => {
         ORMTranslator.saveObjectToDatabase( this ).then( queryResult => {
           const userID = queryResult[0].idUser;
           const userToFind = new this.constructor( userID );
@@ -68,7 +68,10 @@ const ORMObject = classCaller =>
           });
         });
       });
-      return result;
+    }
+
+    suscribe() {
+      return ORMTranslator.createTable( this );
     }
 
   };
