@@ -2,3 +2,22 @@ mixin renderUserInformation( currentUser )
   p Votre nom est #{currentUser.nom}
   p Votre prenom est #{currentUser.prenom}
   p Votre age est #{currentUser.age}
+  a( href="/user/information/" + currentUser.idUser ) view profile
+
+mixin modifyUser( currentUser )
+  form( action="/user/update" method="POST" )
+    fieldset
+      label idUser : 
+      input( type="text" name="idUser" value=currentUser.idUser )
+    fieldset
+      label nom : 
+      input( type="text" name="nom" value=currentUser.nom )
+    fieldset
+      label prenom : 
+      input( type="text" name="prenom" value=currentUser.prenom )
+    fieldset
+      label age : 
+      input( type="number" name="age" value=currentUser.age )
+    p
+      input( type="submit" value="Modifier" )
+      a( href="/user/delete/"+currentUser.idUser ) Supprimer

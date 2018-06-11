@@ -31,11 +31,29 @@ const ORMObject = classCaller =>
     }
 
     delete() {
-      return ORMTranslator.deleteObject( this );
+      return new Promise( ( resolve, reject ) => {
+        ORMTranslator.findByParameter( this ).then( queryResult => {
+          ORMTranslator.deleteObject( this ).then( () => {
+            resolve( ObjectHelpers.convertQueryResultToObject( queryResult.recordset[0], this ) );
+            reject( () => {
+            throw new Error( "Query Exception" );
+          });
+          });
+        });
+      });
     }
 
     update() {
-        
+      return new Promise( ( resolve, reject ) => {
+        ORMTranslator.updateObject( this ).then( () => {
+          this.find().then( queryResult => {
+            resolve( queryResult );
+            reject( () => {
+              throw new Error( "Query Exception" );
+            });
+          });
+        });
+      });
     }
 
     save() {

@@ -45,7 +45,24 @@ class UserController {
       const personne = new Personne();
       const userList = personne.findAll();
       userList.then( function( list ) {
-        response.render('pages/index.pug', { user : list } );
+        response.render('pages/index.pug', { userList : list } );
+      });
+    });
+  }
+
+  //-- [POST] --/
+  static modifyAction( request, response ) {
+    const userID = request.body.idUser;
+    const userName = request.body.nom;
+    const userPrenom = request.body.prenom;
+    const userAge = request.body.age;
+    let user = new Personne( userID, userName, userPrenom, userAge );
+    user = user.update();
+    user.then( function( userUpdated ) {
+      const personne = new Personne();
+      const userList = personne.findAll();
+      userList.then( function( list ) {
+        response.render('pages/index.pug', { userList : list } );
       });
     });
   }

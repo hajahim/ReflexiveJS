@@ -15,9 +15,9 @@ class ORMTranslator {
   static findByParameter( objectToMap ) {
     const tableName = objectToMap.constructor.name;
     let databaseQuery = " SELECT * FROM " + tableName;
-    const whereClausseArray = ObjectHelpers.generateWhereClause( objectToMap );
-    if( whereClausseArray.length > 0 )
-      databaseQuery += " WHERE " + whereClausseArray.join( " AND " );
+    const whereClauseArray = ObjectHelpers.generateWhereClause( objectToMap );
+    if( whereClauseArray.length > 0 )
+      databaseQuery += " WHERE " + whereClauseArray.join( " AND " );
     return DataBaseConnector.queryDatabase( databaseQuery );
   }
 
@@ -36,9 +36,20 @@ class ORMTranslator {
   static deleteObject( currentObject ) {
     const tableName = currentObject.constructor.name;
     let databaseQuery = " DELETE FROM " + tableName;
-    const whereClausseArray = ObjectHelpers.generateWhereClause( currentObject );
-    if( whereClausseArray.length > 0 )
-      databaseQuery += " WHERE " + whereClausseArray.join( " AND " );
+    const whereClauseArray = ObjectHelpers.generateWhereClause( currentObject );
+    if( whereClauseArray.length > 0 )
+      databaseQuery += " WHERE " + whereClauseArray.join( " AND " );
+    return DataBaseConnector.queryDatabase( databaseQuery );
+  }
+
+  static updateObject( currentObject ) {
+    const tableName = currentObject.constructor.name;
+    let databaseQuery = " UPDATE " + tableName;
+    const whereClauseArray = ObjectHelpers.generateWhereClause( currentObject );
+    if( whereClauseArray.length === 0 )
+      return currentObject;
+    databaseQuery += " SET " + whereClauseArray.slice( 1, whereClauseArray.length ).join(" , ");
+    databaseQuery += " WHERE " + currentObject.getId() + " = " + currentObject[ currentObject.getId() ];
     return DataBaseConnector.queryDatabase( databaseQuery );
   }
 

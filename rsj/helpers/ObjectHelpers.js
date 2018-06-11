@@ -14,7 +14,7 @@ class ObjectHelpers {
       const haveNotValue = typeof( objectValue ) === "undefined" || !objectValue;
       if( haveNotValue )
         return;
-      attributeAggregator.push( currentAttribute + " = " + objectValue );
+      attributeAggregator.push( currentAttribute + " = " + "'" + objectValue + "'" );
     });
     return attributeAggregator;
   }
