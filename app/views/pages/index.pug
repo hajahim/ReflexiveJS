@@ -5,6 +5,7 @@ block main
   .container
     .row
       .col-lg-12
-        h1 Welcome to RSJ extension
-        for user in userList
-          +renderUserInformation( user )
+        h1 Welcome to Reflexive Javascript
+        div.l-card-container
+          for user in userList
+            +renderUserInformation( user )

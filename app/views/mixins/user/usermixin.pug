@@ -1,8 +1,12 @@
 mixin renderUserInformation( currentUser )
-  p Votre nom est #{currentUser.nom}
-  p Votre prenom est #{currentUser.prenom}
-  p Votre age est #{currentUser.age}
-  a( href="/user/information/" + currentUser.idUser ) view profile
+  div.m-card
+    section.m-card__image
+      img( src="/user-default.png" alt="default user" width=250 height=250 )
+    section.m-card__descritpion
+      p Nom : #{currentUser.nom}
+      p Prenom : #{currentUser.prenom}
+      p Age : #{currentUser.age}
+      a( href="/user/information/" + currentUser.idUser ).m-card__button view profile
 
 mixin modifyUser( currentUser )
   form( action="/user/update" method="POST" )

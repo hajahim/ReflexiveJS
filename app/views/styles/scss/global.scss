@@ -1,0 +1,9 @@
+/* DEFAULT RENDERING */
+@import "./vendor/_normalize.scss";
+
+/* BASE LAYOUT */
+@import "./variables/_variables.scss";
+@import "./base/_layout.scss";
+
+/* COMPONENT IMPORT */
+@import "./components/_card.scss";

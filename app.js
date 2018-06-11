@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const cookie = require('cookie-parser');
 const path = require('path');
 const http = require('http');
+const sassMiddleware = require('node-sass-middleware');
 
 const app = express()
 
@@ -15,7 +16,18 @@ app.use( bodyParser.urlencoded( { extended: true } ) );
 
 app.use( cookie() );
 
-app.use( express.static( path.join( __dirname, 'build' ) ) );
+app.use(
+  sassMiddleware({
+      src: path.join( __dirname, 'app/views/styles/scss' ),
+      dest: path.join( __dirname, 'app/views/styles/css' ),
+      outputStyle: 'compressed',
+      debug: true    
+  })
+);
+
+app.use( express.static( path.join( __dirname, 'app/views/styles/css' ) ) );
+
+app.use( express.static( path.join( __dirname, 'app/views/images' ) ) );
 
 require( './app/controller/controller' )( app );
 
