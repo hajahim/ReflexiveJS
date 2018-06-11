@@ -9,19 +9,19 @@ mixin renderUserInformation( currentUser )
       a( href="/user/information/" + currentUser.idUser ).m-card__button view profile
 
 mixin modifyUser( currentUser )
-  form( action="/user/update" method="POST" )
-    fieldset
-      label idUser : 
-      input( type="text" name="idUser" value=currentUser.idUser )
-    fieldset
-      label nom : 
-      input( type="text" name="nom" value=currentUser.nom )
-    fieldset
-      label prenom : 
-      input( type="text" name="prenom" value=currentUser.prenom )
-    fieldset
-      label age : 
-      input( type="number" name="age" value=currentUser.age )
+  form( action="/user/update" method="POST" ).m-form
+    fieldset.m-form__field
+      label.m-form__label idUser : 
+      input( type="text" name="idUser" value=currentUser.idUser ).m-form__input
+    fieldset.m-form__field
+      label.m-form__label nom : 
+      input( type="text" name="nom" value=currentUser.nom ).m-form__input
+    fieldset.m-form__field
+      label.m-form__label prenom : 
+      input( type="text" name="prenom" value=currentUser.prenom ).m-form__input
+    fieldset.m-form__field
+      label.m-form__label age : 
+      input( type="number" name="age" value=currentUser.age ).m-form__input
     p
       input( type="submit" value="Modifier" )
       a( href="/user/delete/"+currentUser.idUser ) Supprimer

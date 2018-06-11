@@ -6,6 +6,8 @@ block main
     .row
       .col-lg-12
         h1 Welcome to Reflexive Javascript
+        p Create new object 
+          a( href="/user/create" ) Here
         div.l-card-container
           for user in userList
             +renderUserInformation( user )
