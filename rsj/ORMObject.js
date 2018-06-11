@@ -7,7 +7,7 @@ const ORMObject = classCaller =>
     find() {
       return new Promise( ( resolve, reject ) => {
         ORMTranslator.findByParameter( this ).then( queryResult => {
-          resolve( ObjectHelpers.convertQueryResultToObject( queryResult.recordset[0], this ) );
+          resolve( ObjectHelpers.convertQueryResultToObject( queryResult[0], this ) );
           reject( () => {
             throw new Error( "Query Exception" );
           });
@@ -19,7 +19,7 @@ const ORMObject = classCaller =>
       return new Promise( ( resolve, reject ) => {
         ORMTranslator.findAll( this ).then( queryResult => {
           const retour = [];
-          queryResult.recordset.map( resultRow => {
+          queryResult.map( resultRow => {
             retour.push( ObjectHelpers.convertQueryResultToObject( resultRow, this ) );
           });
           resolve( retour );
@@ -34,7 +34,7 @@ const ORMObject = classCaller =>
       return new Promise( ( resolve, reject ) => {
         ORMTranslator.findByParameter( this ).then( queryResult => {
           ORMTranslator.deleteObject( this ).then( () => {
-            resolve( ObjectHelpers.convertQueryResultToObject( queryResult.recordset[0], this ) );
+            resolve( ObjectHelpers.convertQueryResultToObject( queryResult[0], this ) );
             reject( () => {
             throw new Error( "Query Exception" );
           });
@@ -60,7 +60,7 @@ const ORMObject = classCaller =>
       let result = null;
       result = new Promise( ( resolve, reject ) => {
         ORMTranslator.saveObjectToDatabase( this ).then( queryResult => {
-          const userID = queryResult.recordset[0].idUser;
+          const userID = queryResult[0].idUser;
           const userToFind = new this.constructor( userID );
           resolve( userToFind.find() );
           reject( () => {

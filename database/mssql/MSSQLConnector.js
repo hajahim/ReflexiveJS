@@ -32,12 +32,12 @@ class MSSQLConnector {
       const connection = this.getConnection();
       queryResult = new Promise( ( resolve, reject ) => {
         connection.then( dbInstance => {
-          resolve( dbInstance.request()
-            .query( query )
-          )
-          reject( function() {
-            throw new Error("Can't connect to DB") 
-          })
+          dbInstance.request().query( query ).then( responseQuery => {
+            resolve( responseQuery.recordset );
+            reject( function() {
+              throw new Error("Can't connect to DB") 
+            })
+          });
         })
       });
     } catch ( DatabaseQueryException ) {
