@@ -10,11 +10,11 @@ class ObjectHelpers {
     const objectAttributes = Object.keys( objectToMap );
     let attributeAggregator = [];
     objectAttributes.map( function( currentAttribute, index ) {
-      const objectValue = objectToMap[ currentAttribute ];
+      const objectValue = objectToMap[ currentAttribute.slice( 1, currentAttribute.length ) ];
       const haveNotValue = typeof( objectValue ) === "undefined" || !objectValue;
       if( haveNotValue )
         return;
-      attributeAggregator.push( currentAttribute + " = " + "'" + objectValue + "'" );
+      attributeAggregator.push( currentAttribute.slice( 1, currentAttribute.length ) + " = " + "'" + objectValue + "'" );
     });
     return attributeAggregator;
   }
@@ -34,9 +34,27 @@ class ObjectHelpers {
     const newObject = new objectType.constructor();
     const objectAttributes = Object.keys( newObject );
     objectAttributes.map( attribute => {
-      newObject[ attribute ] = queryResult[ attribute ];
+      newObject[ attribute.slice( 1, attribute.length ) ] = queryResult[ attribute.slice( 1, attribute.length ) ];
     });
     return newObject;
+  }
+
+  static getterNameProperty( attributeName ) {
+    return "get" + attributeName.charAt(0).toUpperCase() + attributeName.slice(1);
+  }
+
+  static setterNameProperty( attributeName ) {
+    return "set" + attributeName.charAt(0).toUpperCase() + attributeName.slice(1);
+  }
+
+  static findProperty( objectToMap, propertyName ) {
+    let method = null;
+    try {
+      method = objectToMap[ propertyName ];
+    } catch( methodNotFoundException ) {
+      throw new Error( "Method not found exception : " + methodNotFoundException );
+    }
+    return method;
   }
 
 }

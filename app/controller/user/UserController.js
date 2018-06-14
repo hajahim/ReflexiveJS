@@ -5,7 +5,6 @@ class UserController {
   static index( request, response ) {
     const personne = new Personne();
     const userList = personne.findAll();
-    console.warn( personne.power );
     userList.then( function( list ) {
       response.render('pages/index.pug', { userList : list } );
     });

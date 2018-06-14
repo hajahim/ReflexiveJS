@@ -1,14 +1,10 @@
 const ORMObject = require( "../../rsj/ORMObject" );
+const ObjectTagger = require( "../../rsj/decorator/ObjectTagger" );
+
+var counter = 0;
 
 class ORMInheritance {}
 
-function superhero(target) {
-  console.warn("MISY");
-  target.isSuperhero = true
-  target.power = 'flight'
-}
-
-@superhero
 class Personne extends ORMObject( ORMInheritance ) {
 
   constructor( userID = null, nom = null, prenom = null, age = null ) {
@@ -21,6 +17,38 @@ class Personne extends ORMObject( ORMInheritance ) {
 
   getId() {
     return "idUser";
+  }
+
+  get idUser() {
+    return this._idUser;
+  }
+
+  get nom() {
+    return this._nom;
+  }
+
+  get prenom() {
+    return this._prenom;
+  }
+
+  get age() {
+    return this._age;
+  }
+
+  set idUser( userID ) {
+    this._idUser = userID;
+  }
+
+  set nom( nom ) {
+    this._nom = nom;
+  }
+
+  set prenom( prenom ) {
+    this._prenom = prenom;
+  }
+
+  set age( age ) {
+    this._age = age;
   }
 
 }

@@ -1,4 +1,4 @@
 {
-  "presets": ["env"],
-  "plugins": ["syntax-decorators"]
+  "plugins":["transform-decorators-legacy"],
+  "presets":["env"]
 }
