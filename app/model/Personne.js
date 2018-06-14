@@ -19,18 +19,33 @@ class Personne extends ORMObject( ORMInheritance ) {
     return "idUser";
   }
 
+  @ObjectTagger.annotate({
+    type: "varchar",
+    maxlength: 20
+  })
   get idUser() {
     return this._idUser;
   }
 
+  @ObjectTagger.annotate({
+    type: "varchar",
+    maxlength: 20
+  })
   get nom() {
     return this._nom;
   }
 
+  @ObjectTagger.annotate({
+    type: "varchar",
+    maxlength: 20
+  })
   get prenom() {
     return this._prenom;
   }
 
+  @ObjectTagger.annotate({
+    type: "number"
+  })
   get age() {
     return this._age;
   }

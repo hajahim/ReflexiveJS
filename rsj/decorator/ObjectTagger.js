@@ -1,9 +1,12 @@
 class ObjectTagger {
 
-  static annotate( target, key, desriptor ) {
-    console.warn( "target", target );
-    console.warn( "key", key );
-    console.warn( "desriptor", desriptor );
+  static annotate( decoratorProperty ) {
+    function annotateFied( target, key, descriptor ) {
+      if( typeof( target.configurationField ) === "undefined" )
+        target.configurationField = {};
+      target.configurationField[key] = decoratorProperty;
+    }
+    return annotateFied;
   }
 
 }
