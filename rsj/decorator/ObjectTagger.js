@@ -1,7 +1,3 @@
-const ORMObject = require( "../ORMObject" );
-
-class ORMIheritance {}
-
 class ObjectTagger {
 
   static annotate( decoratorProperty ) {
