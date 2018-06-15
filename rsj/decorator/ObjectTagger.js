@@ -1,3 +1,7 @@
+const ORMObject = require( "../ORMObject" );
+
+class ORMIheritance {}
+
 class ObjectTagger {
 
   static annotate( decoratorProperty ) {
@@ -7,6 +11,12 @@ class ObjectTagger {
       target.configurationField[key] = decoratorProperty;
     }
     return annotateFied;
+  }
+
+  static Entity( Class ) {
+    return (...args) => {
+      return new Class(...args);
+    };
   }
 
 }

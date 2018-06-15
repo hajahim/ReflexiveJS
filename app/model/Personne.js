@@ -1,10 +1,9 @@
 const ORMObject = require( "../../rsj/ORMObject" );
 const ObjectTagger = require( "../../rsj/decorator/ObjectTagger" );
 
-var counter = 0;
-
 class ORMInheritance {}
 
+@ObjectTagger.Entity
 class Personne extends ORMObject( ORMInheritance ) {
 
   constructor( userID = null, nom = null, prenom = null, age = null ) {
@@ -20,7 +19,7 @@ class Personne extends ORMObject( ORMInheritance ) {
   }
 
   @ObjectTagger.annotate({
-    type: "varchar",
+    type: "VARCHAR",
     maxlength: 20
   })
   get idUser() {
@@ -28,7 +27,7 @@ class Personne extends ORMObject( ORMInheritance ) {
   }
 
   @ObjectTagger.annotate({
-    type: "varchar",
+    type: "VARCHAR",
     maxlength: 20
   })
   get nom() {
@@ -36,7 +35,7 @@ class Personne extends ORMObject( ORMInheritance ) {
   }
 
   @ObjectTagger.annotate({
-    type: "varchar",
+    type: "VARCHAR",
     maxlength: 20
   })
   get prenom() {
@@ -44,7 +43,7 @@ class Personne extends ORMObject( ORMInheritance ) {
   }
 
   @ObjectTagger.annotate({
-    type: "number"
+    type: "INT"
   })
   get age() {
     return this._age;
