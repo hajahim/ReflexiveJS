@@ -21,7 +21,9 @@ class PersonneController {
   }
 
   static createUser( request, response ) {
-    response.render('pages/user/create.pug');
+    const user = new Personne();
+    const userForm = user.generateForm( { formAction: "/user/save", formMethod: "POST", formTextSubmit: "Sauvegarder" } );
+    response.render('pages/user/create.pug', { form: userForm } );
   }
   
   //-- [POST] --/

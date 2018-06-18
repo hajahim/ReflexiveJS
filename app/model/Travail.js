@@ -1,7 +1,6 @@
 const ORMObject = require( "../../rsj/ORMObject" );
 const ObjectTagger = require( "../../rsj/decorator/ObjectTagger" );
-
-class ORMInheritance {}
+const ObjectRender = require( "../../rsj/generator/ObjectRender" );
 
 @ObjectTagger.Entity({
   idTravail: {
@@ -17,7 +16,7 @@ class ORMInheritance {}
     maxLength: 100
   }
 })
-class Travail extends ORMObject( ORMInheritance ) {
+class Travail extends ORMObject( ObjectRender ) {
 
   constructor( travailID = null, libelle = null, description = null ) {
     super();

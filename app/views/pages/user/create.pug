@@ -6,15 +6,4 @@ block main
     .row
       .col-lg-12
         h1 Create User
-        form( action="/user/save" method="POST" ).m-form
-          fieldset.m-form__field
-            label.m-form__label nom : 
-            input( type="text" name="nom" ).m-form__input
-          fieldset.m-form__field
-            label.m-form__label prenom : 
-            input( type="text" name="prenom" ).m-form__input
-          fieldset.m-form__field
-            label.m-form__label age : 
-            input( type="number" name="age" ).m-form__input
-          p
-            input( type="submit" value="Sauvegarder" )
+        div!= form

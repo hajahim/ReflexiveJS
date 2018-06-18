@@ -21,7 +21,9 @@ class TravailController {
   }
 
   static createTravail( request, response ) {
-    response.render('pages/travail/create.pug');
+    const travail = new Travail();
+    const travailForm = travail.generateForm( { formAction: "/travail/save", formMethod: "POST", formTextSubmit: "Sauvegarder" } );
+    response.render('pages/travail/create.pug', { form: travailForm } );
   }
 
   //-- [POST] --/
