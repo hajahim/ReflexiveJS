@@ -15,9 +15,9 @@ This is a library for ORM (Database and object) interaction implement with Javas
 
 Example connector implemented :
 
-- PostgreSQL
+- PostgreSQL (feature)
 - SQL Server
-- MySQL
+- MySQL (feature)
 
 ## Feature ##
 
@@ -43,7 +43,7 @@ Before using this framework, please make sure that:
 
 In command line, type :
 
-> node app.js
+> npm start
 
 And open in browser :
 
