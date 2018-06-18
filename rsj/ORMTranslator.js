@@ -1,4 +1,4 @@
-const MSSQLConnector = require( "../database/mssql/MSSQLConnector" );
+const MSSQLConnector = require( "./database/mssql/MSSQLConnector" );
 const StringHelpers = require( "./helpers/StringHelpers" );
 const ObjectHelpers = require( "./helpers/ObjectHelpers" );
 
