@@ -29,6 +29,11 @@ When object extends this framework, it automatically have the CRUD action functi
 - **delete()**
 - **update()**
 
+However you can extend for Object render who've been implemented on this extension. But you can redefine these function
+
+- **generateForm()**
+- **renderObject()**
+
 ## Question? ##
 
 Please ask questions on StackOverflow and be sure to include the parsley.js tag. Please provide an example, starting for example from this jsfiddle
