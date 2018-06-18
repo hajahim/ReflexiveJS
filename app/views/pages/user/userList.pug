@@ -1,0 +1,13 @@
+extends ../_base/layout.pug
+
+block main
+
+  .container
+    .row
+      .col-lg-12
+        h1 User list
+        p Create new object 
+          a( href="/user/create" ) Here
+        div.l-card-container
+          for user in userList
+            +renderUserInformation( user )

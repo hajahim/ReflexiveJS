@@ -1,0 +1,17 @@
+extends ../_base/layout.pug
+
+block main
+
+  .container
+    .row
+      .col-lg-12
+        h1 Create Travail
+        form( action="/travail/save" method="POST" ).m-form
+          fieldset.m-form__field
+            label.m-form__label libelle : 
+            input( type="text" name="libelle" ).m-form__input
+          fieldset.m-form__field
+            label.m-form__label description : 
+            input( type="text" name="description" ).m-form__input
+          p
+            input( type="submit" value="Sauvegarder" )

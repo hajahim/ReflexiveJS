@@ -53,16 +53,50 @@ class ORMTranslator {
     return DataBaseConnector.queryDatabase( databaseQuery );
   }
 
-  static checkingObjectSubscription( currentObject ) {
-    const tableName = currentObject.constructor.name;
-    let databaseQuery = "SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = '" + tableName + "'";
+  static checkingObjectSubscription( objectName ) {
+    let databaseQuery = "SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = '" + objectName + "'";
     return DataBaseConnector.queryDatabase( databaseQuery );
   }
 
-  static createTable( currentObject ) {
-    const tableName = currentObject.constructor.name;
+  static generateObjectQuery( tableName, objectProperties ) {
     let databaseQuery = "CREATE TABLE " + tableName + " ( ";
-    const prototypeReading = currentObject.constructor.toString();
+    const objectPropertiesAggregator = [];
+    let queryValue = null;
+    Object.keys( objectProperties ).map( propertyName => {
+      const propertyValues = objectProperties[propertyName];
+      const isPrimary = typeof( propertyValues.isPrimaryKey ) !== "undefined" && propertyValues.isPrimaryKey;
+      queryValue = "";
+      if( isPrimary )
+        queryValue = `${propertyName} ${propertyValues.type} IDENTITY(1,1) NOT NULL PRIMARY KEY`;
+      else
+        queryValue = `${propertyName} ${propertyValues.type || "VARCHAR"}(${propertyValues.maxLength || ""})`;
+      objectPropertiesAggregator.push( queryValue );
+    });
+    if( objectPropertiesAggregator.length > 0 )
+      databaseQuery += objectPropertiesAggregator.join( " , " );
+    databaseQuery += " ) ";
+    return databaseQuery;
+  }
+
+  static suscribeObject( objectParameter ) {
+    const [ currentObject, objectProperties ] = objectParameter;
+    const tableName = currentObject.name;
+    const isObjectAlreadySuscribe = this.checkingObjectSubscription( tableName );
+    return new Promise( ( resolve, reject ) => {
+      isObjectAlreadySuscribe.then( queryResult => {
+        try {
+          if( queryResult.length === 0 ) {
+            const queryString = this.generateObjectQuery( tableName, objectProperties )
+            resolve( DataBaseConnector.queryDatabase( queryString ) )
+          } else {
+            resolve( )
+          }
+        } catch( queryException ) {
+          reject();
+          throw new Error( "Exception throw at : " + queryException );
+        }
+      });
+    });
   }
 
 }

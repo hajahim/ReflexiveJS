@@ -2,11 +2,11 @@ const Personne = require( "../../model/Personne" );
 
 class PersonneController {
 
-  static index( request, response ) {
+  static userList( request, response ) {
     const personne = new Personne();
     const userList = personne.findAll();
     userList.then( function( list ) {
-      response.render('pages/index.pug', { userList : list } );
+      response.render('pages/user/userList.pug', { userList : list } );
     });
   }
 

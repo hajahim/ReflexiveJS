@@ -1,3 +1,5 @@
+const EventManager = require('../event/EventManager');
+
 class ObjectTagger {
 
   static annotate( decoratorProperty ) {
@@ -9,10 +11,13 @@ class ObjectTagger {
     return annotateFied;
   }
 
-  static Entity( Class ) {
-    return (...args) => {
-      return new Class(...args);
-    };
+  static Entity( ojectProperties ) {
+    return function decorator( Class ) {
+      EventManager.trigger( "OBJECT:TYPE:CREATE", [ Class, ojectProperties ] );
+      return (...args) => {
+        return new Class(...args);
+      };
+    }
   }
 
 }

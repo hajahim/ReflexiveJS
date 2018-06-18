@@ -1,0 +1,23 @@
+mixin renderTravailInformation( currentTravail )
+  div.m-card
+    section.m-card__image
+      img( src="/travail-default.png" alt="default travail" width=250 height=250 )
+    section.m-card__descritpion
+      p Libelle : #{currentTravail.libelle}
+      p Description : #{currentTravail.description}
+      a( href="/travail/information/" + currentTravail.idTravail ).m-card__button view travail
+
+mixin modifyTravail( currentTravail )
+  form( action="/travail/update" method="POST" ).m-form
+    fieldset.m-form__field
+      label.m-form__label idTravail : 
+      input( type="text" name="idTravail" value=currentTravail.idTravail ).m-form__input
+    fieldset.m-form__field
+      label.m-form__label Libelle : 
+      input( type="text" name="libelle" value=currentTravail.libelle ).m-form__input
+    fieldset.m-form__field
+      label.m-form__label Description : 
+      input( type="text" name="description" value=currentTravail.description ).m-form__input
+    p
+      input( type="submit" value="Modifier" )
+      a( href="/user/delete/"+currentTravail.idTravail ) Supprimer
