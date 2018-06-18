@@ -1,6 +1,6 @@
 const Personne = require( "../../model/Personne" );
 
-class UserController {
+class PersonneController {
 
   static index( request, response ) {
     const personne = new Personne();
@@ -69,4 +69,4 @@ class UserController {
 
 }
 
-module.exports = UserController;
+module.exports = PersonneController;

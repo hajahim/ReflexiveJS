@@ -1,4 +1,4 @@
-const UserController = require("./user/UserController");
+const UserController = require("./personne/PersonneController");
 
 module.exports = function (app) {
 
