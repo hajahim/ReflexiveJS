@@ -44,6 +44,13 @@ Before using this framework, please make sure that:
 
 > npm install
 
+## Configuration ##
+
+Configuration is set into folder 
+> \rsj\config
+
+You can set your personnalize connectionString.xml, project will load and read this file to boot database liability
+
 ## Run tests ##
 
 In command line, type :
