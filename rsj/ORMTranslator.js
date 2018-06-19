@@ -1,8 +1,10 @@
-const MSSQLConnector = require( "./database/mssql/MSSQLConnector" );
 const StringHelpers = require( "./helpers/StringHelpers" );
 const ObjectHelpers = require( "./helpers/ObjectHelpers" );
+const Configuration = require( "./config/ConfigurationParser" );
+const connectionString = Configuration.connectionConfigurationData.connectionString;
+const Connector = require( `./database/${connectionString.database.driver}` );
 
-const DataBaseConnector = MSSQLConnector;
+const DataBaseConnector = Connector;
 
 class ORMTranslator {
 
