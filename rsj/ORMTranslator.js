@@ -1,10 +1,12 @@
 const StringHelpers = require( "./helpers/StringHelpers" );
 const ObjectHelpers = require( "./helpers/ObjectHelpers" );
 const Configuration = require( "./config/ConfigurationParser" );
-const connectionString = Configuration.connectionConfigurationData.connectionString;
-const Connector = require( `./database/${connectionString.database.driver}` );
+const currentDriver = Configuration.getCurrentDriver();
+const connectorConfiguration = Configuration.getConnectionStringData();
+const specificity = Configuration.getSpecificity();
+const Connector = require( `./database/${currentDriver}` );
 
-const DataBaseConnector = Connector;
+const DataBaseConnector = new Connector( connectorConfiguration );
 
 class ORMTranslator {
 
@@ -15,7 +17,7 @@ class ORMTranslator {
   }
 
   static findByParameter( objectToMap ) {
-    const tableName = objectToMap.constructor.name;
+    const tableName = objectToMap.constructor.name.toLowerCase();
     let databaseQuery = " SELECT * FROM " + tableName;
     const whereClauseArray = ObjectHelpers.generateWhereClause( objectToMap );
     if( whereClauseArray.length > 0 )
@@ -24,7 +26,7 @@ class ORMTranslator {
   }
 
   static saveObjectToDatabase( currentObject ) {
-    const className = currentObject.constructor.name;
+    const className = currentObject.constructor.name.toLowerCase();
     const placeholder = ObjectHelpers.generateInsertPlaceholder( currentObject );
     let query = "INSERT INTO " + className + " OUTPUT Inserted." + currentObject.getId() + " VALUES (" + placeholder + ")";
     const objectProperties = Object.keys( currentObject );
@@ -36,7 +38,7 @@ class ORMTranslator {
   }
 
   static deleteObject( currentObject ) {
-    const tableName = currentObject.constructor.name;
+    const tableName = currentObject.constructor.name.toLowerCase();
     let databaseQuery = " DELETE FROM " + tableName;
     const whereClauseArray = ObjectHelpers.generateWhereClause( currentObject );
     if( whereClauseArray.length > 0 )
@@ -45,7 +47,7 @@ class ORMTranslator {
   }
 
   static updateObject( currentObject ) {
-    const tableName = currentObject.constructor.name;
+    const tableName = currentObject.constructor.name.toLowerCase();
     let databaseQuery = " UPDATE " + tableName;
     const whereClauseArray = ObjectHelpers.generateWhereClause( currentObject );
     if( whereClauseArray.length === 0 )
@@ -56,7 +58,7 @@ class ORMTranslator {
   }
 
   static checkingObjectSubscription( objectName ) {
-    let databaseQuery = "SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = '" + objectName + "'";
+    let databaseQuery = "SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = '" + objectName.toLowerCase() + "'";
     return DataBaseConnector.queryDatabase( databaseQuery );
   }
 
@@ -68,10 +70,11 @@ class ORMTranslator {
       const propertyValues = objectProperties[propertyName];
       const isPrimary = typeof( propertyValues.isPrimaryKey ) !== "undefined" && propertyValues.isPrimaryKey;
       queryValue = "";
+      const maxLength = typeof( propertyValues.maxLength ) !== "undefined" ? `(${propertyValues.maxLength || ""})` : "";
       if( isPrimary )
-        queryValue = `${propertyName} ${propertyValues.type} IDENTITY(1,1) NOT NULL PRIMARY KEY`;
+        queryValue = `${propertyName} ${specificity.autoIncrementName} PRIMARY KEY`;
       else
-        queryValue = `${propertyName} ${propertyValues.type || "VARCHAR"}(${propertyValues.maxLength || ""})`;
+        queryValue = `${propertyName} ${propertyValues.type || "VARCHAR"}${maxLength}`;
       objectPropertiesAggregator.push( queryValue );
     });
     if( objectPropertiesAggregator.length > 0 )

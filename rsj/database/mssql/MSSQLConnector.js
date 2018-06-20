@@ -4,7 +4,11 @@ let Connection = null;
 
 class MSSQLConnector {
 
-  static getConfiguration() {
+  constructor( configuration ) {
+    this.configuration = configuration || this.getDefaultConfiguration();
+  }
+
+  getDefaultConfiguration() {
     return {
       user: "sa",
       password: "Asdcxz1+",
@@ -16,17 +20,17 @@ class MSSQLConnector {
     }
   }
 
-  static getConnection() {
+  getConnection() {
     try {
       if( Connection === null )
-        Connection = MSSQLDriver.connect( this.getConfiguration() );
+        Connection = MSSQLDriver.connect( this.configuration );
     } catch ( ConnectionDatabaseException ) {
       throw new Error( `Database connect exception : ${ConnectionDatabaseException}` );
     }
     return Connection;
   }
 
-  static queryDatabase( query ) {
+  queryDatabase( query ) {
     let queryResult = null;
     try {
       const connection = this.getConnection();

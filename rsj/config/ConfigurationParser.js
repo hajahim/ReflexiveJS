@@ -13,6 +13,33 @@ class ConfigurationParser {
     this.connectionConfigurationData = JSON.parse( parser.toJson( fs.readFileSync( __dirname + this.filePath ) ) );
   }
 
+  getConnectionConfiguration() {
+    const connectionString = this.connectionConfigurationData.connectionString;
+    const connectionName = connectionString.database.connectorConfig;
+    const connectionArrayConfig = connectionString.connector;
+    for( let i = 0 ; i < connectionArrayConfig.length ; i++ ) {
+      let connectionConfig = connectionArrayConfig[i];
+      if( connectionConfig.name.toLowerCase() === connectionName.toLowerCase() )
+        return connectionConfig;
+    };
+    return false;
+  }
+
+  getCurrentDriver() {
+    const connectionString = this.connectionConfigurationData.connectionString;
+    return connectionString.database.driver;
+  }
+
+  getConnectionStringData() {
+    const currentConfiguration = this.getConnectionConfiguration();
+    const arrayConfiguration = currentConfiguration.connectionString.split(";");
+    return JSON.parse( `{ ${arrayConfiguration.join(",").replace(/'/g, '"')} }` );
+  }
+
+  getSpecificity() {
+    return JSON.parse( `${this.getConnectionConfiguration().specificity.replace(/'/g, '"')}` );
+  }
+
 }
 
 const configuration = new ConfigurationParser( "/ConnectionString.xml" );

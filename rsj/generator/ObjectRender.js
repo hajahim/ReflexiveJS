@@ -1,7 +1,7 @@
 class ObjectRender {
 
   generateForm( formProperties ) {
-    let formResult = `<form action="${formProperties.formAction || ""}" method="${formProperties.formMethod | ""}" class="m-form">`;
+    let formResult = `<form action="${formProperties.formAction || ""}" method="${formProperties.formMethod}" class="m-form">`;
     const objectProperties = Object.keys( this );
     objectProperties.forEach( property => {
       const fieldName = property.split("").slice( 1, property.length ).join("");

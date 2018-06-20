@@ -1,10 +1,14 @@
-var postgreSQLDriver = require('pg-promise');
+const { Client } = require('pg');
 
 let Connection = null;
 
 class PostgreSQLConnector {
 
-  static getConfiguration() {
+  constructor( configuration ) {
+    this.configuration = configuration || this.getDefaultConfiguration();
+  }
+
+  getDefaultConfiguration() {
     return {
       user: "sa",
       password: "Asdcxz1+",
@@ -14,27 +18,29 @@ class PostgreSQLConnector {
     }
   }
 
-  static getConnection() {
+  getConnection() {
     try {
-      if( Connection === null )
-        Connection = postgreSQLDriver( this.getConfiguration() );
+      if( Connection === null ) {
+        Connection = new Client( this.configuration );
+        Connection.connect();
+      }
     } catch ( ConnectionDatabaseException ) {
       throw new Error( `Database connect exception : ${ConnectionDatabaseException}` );
     }
     return Connection;
   }
 
-  static queryDatabase( query ) {
+  queryDatabase( query ) {
     let queryResult = null;
     try {
       const connection = this.getConnection();
       queryResult = new Promise( ( resolve, reject ) => {
-        connection.one( query ).then( responseQuery => {
-          resolve( responseQuery );
-        })
-        reject( function() {
-          throw new Error("Can't connect to DB") 
-        })
+        console.warn( query );
+        connection.query( query , ( error, responseQuery ) => {
+          resolve( responseQuery.rows );
+        });
+      }).catch( ( error ) => {
+        throw new Error("Can't connect to DB : " + error) 
       });
     } catch ( DatabaseQueryException ) {
       queryResult.reject( DatabaseQueryException );
