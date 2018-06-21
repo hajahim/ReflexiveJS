@@ -35,7 +35,6 @@ class PostgreSQLConnector {
     try {
       const connection = this.getConnection();
       queryResult = new Promise( ( resolve, reject ) => {
-        console.warn( query );
         connection.query( query , ( error, responseQuery ) => {
           resolve( responseQuery.rows );
         });

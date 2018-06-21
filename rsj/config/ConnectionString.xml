@@ -4,9 +4,9 @@
     RSJ connection strings.
     All database connections for RSJ are configured here.
   -->
-  <connector name="sqlServer" connectionString="'user':'sa';'password':'Asdcxz1+';'server':'localhost';'database':'RSJDatabase';'options': { 'encrypt': 'true' }" specificity="{ 'autoIncrementName':'INT NOT NULL INDENTITY(1,1)' }" />
-  <connector name="postgreSQL" connectionString="'user':'postgres';'password':'mihaja15';'server':'localhost';'database':'RSJDatabase'" specificity="{ 'autoIncrementName':'SERIAL' }" />
+  <connector name="mssql" connectionString="'user':'sa';'password':'Asdcxz1+';'server':'localhost';'database':'RSJDatabase';'options': { 'encrypt': 'true' }" specificity="{ 'autoIncrementName':'INT NOT NULL INDENTITY(1,1)' }" />
+  <connector name="postgres" connectionString="'user':'postgres';'password':'mihaja15';'server':'localhost';'database':'RSJDatabase'" specificity="{ 'autoIncrementName':'SERIAL' }" />
   <connector name="mysql" connectionString="user:sa;password:Asdcxz1+;server:localhost;database:RSJDatabase" />
 
-  <database driver="postgres/PostgreSQLConnector" connectorConfig="postgreSQL" />
+  <database driver="postgres/PostgreSQLConnector" connectorConfig="postgres" />
  </connectionString>

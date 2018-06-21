@@ -13,9 +13,14 @@ class ConfigurationParser {
     this.connectionConfigurationData = JSON.parse( parser.toJson( fs.readFileSync( __dirname + this.filePath ) ) );
   }
 
+  getConnectionDriver() {
+    const connectionString = this.connectionConfigurationData.connectionString;
+    return connectionString.database.connectorConfig;
+  }
+
   getConnectionConfiguration() {
     const connectionString = this.connectionConfigurationData.connectionString;
-    const connectionName = connectionString.database.connectorConfig;
+    const connectionName = this.getConnectionDriver();
     const connectionArrayConfig = connectionString.connector;
     for( let i = 0 ; i < connectionArrayConfig.length ; i++ ) {
       let connectionConfig = connectionArrayConfig[i];

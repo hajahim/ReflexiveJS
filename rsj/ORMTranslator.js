@@ -1,86 +1,65 @@
 const StringHelpers = require( "./helpers/StringHelpers" );
 const ObjectHelpers = require( "./helpers/ObjectHelpers" );
 const Configuration = require( "./config/ConfigurationParser" );
+const GenericSQL = require("./helpers/GenericSQL");
 const currentDriver = Configuration.getCurrentDriver();
 const connectorConfiguration = Configuration.getConnectionStringData();
 const specificity = Configuration.getSpecificity();
 const Connector = require( `./database/${currentDriver}` );
 
 const DataBaseConnector = new Connector( connectorConfiguration );
+const queryBuilder = new GenericSQL( Configuration.getConnectionDriver() );
 
 class ORMTranslator {
 
   static findAll( objectToMap ) {
     const className = objectToMap.constructor.name;
-    const result = DataBaseConnector.queryDatabase( `SELECT * from ${className}` );
+    const result = DataBaseConnector.queryDatabase( queryBuilder.selectAllDataQuery( className ) );
     return result;
   }
 
   static findByParameter( objectToMap ) {
-    const tableName = objectToMap.constructor.name.toLowerCase();
-    let databaseQuery = " SELECT * FROM " + tableName;
-    const whereClauseArray = ObjectHelpers.generateWhereClause( objectToMap );
-    if( whereClauseArray.length > 0 )
-      databaseQuery += " WHERE " + whereClauseArray.join( " AND " );
-    return DataBaseConnector.queryDatabase( databaseQuery );
+    const tableName = objectToMap.constructor.name;
+    const whereClause = ObjectHelpers.generateWhereClause( objectToMap );
+    const query = queryBuilder.selectByParameter( tableName, whereClause );
+    return DataBaseConnector.queryDatabase( query );
   }
 
   static saveObjectToDatabase( currentObject ) {
-    const className = currentObject.constructor.name.toLowerCase();
-    const placeholder = ObjectHelpers.generateInsertPlaceholder( currentObject );
-    let query = "INSERT INTO " + className + " OUTPUT Inserted." + currentObject.getId() + " VALUES (" + placeholder + ")";
+    const className = currentObject.constructor.name;
+    const jsonObject = {};
     const objectProperties = Object.keys( currentObject );
-    const objectValues = objectProperties.slice( 1, objectProperties.length ).map( function( attribute ) {
-      return "'" + currentObject[attribute] + "'";
+    objectProperties.slice( 1, objectProperties.length ).map( function( attribute ) {
+      const getter = attribute.split("").slice( 1, attribute.length ).join("");
+      jsonObject[getter] = currentObject[attribute];
     });
-    query = StringHelpers.replacePlaceholder( query, objectValues );
+    const query = queryBuilder.insertDataQuery( className, jsonObject, currentObject.getId() );
     return DataBaseConnector.queryDatabase( query );
   }
 
   static deleteObject( currentObject ) {
-    const tableName = currentObject.constructor.name.toLowerCase();
-    let databaseQuery = " DELETE FROM " + tableName;
-    const whereClauseArray = ObjectHelpers.generateWhereClause( currentObject );
-    if( whereClauseArray.length > 0 )
-      databaseQuery += " WHERE " + whereClauseArray.join( " AND " );
-    return DataBaseConnector.queryDatabase( databaseQuery );
+    const tableName = currentObject.constructor.name;
+    const whereClause = ObjectHelpers.generateWhereClause( currentObject );
+    const query = queryBuilder.deleteQuery( tableName, whereClause );
+    return DataBaseConnector.queryDatabase( query );
   }
 
   static updateObject( currentObject ) {
-    const tableName = currentObject.constructor.name.toLowerCase();
-    let databaseQuery = " UPDATE " + tableName;
-    const whereClauseArray = ObjectHelpers.generateWhereClause( currentObject );
-    if( whereClauseArray.length === 0 )
-      return currentObject;
-    databaseQuery += " SET " + whereClauseArray.slice( 1, whereClauseArray.length ).join(" , ");
-    databaseQuery += " WHERE " + currentObject.getId() + " = " + currentObject[ currentObject.getId() ];
-    return DataBaseConnector.queryDatabase( databaseQuery );
+    const tableName = currentObject.constructor.name;  
+    const properties = ObjectHelpers.generateWhereClause( currentObject );
+    const whereClause = {};
+    whereClause[ currentObject.getId() ] = currentObject[ currentObject.getId() ];
+    const query = queryBuilder.updateQuery( tableName, properties, whereClause );
+    return DataBaseConnector.queryDatabase( query );
   }
 
   static checkingObjectSubscription( objectName ) {
-    let databaseQuery = "SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = '" + objectName.toLowerCase() + "'";
+    let databaseQuery = "SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = '" + objectName + "'";
     return DataBaseConnector.queryDatabase( databaseQuery );
   }
 
   static generateObjectQuery( tableName, objectProperties ) {
-    let databaseQuery = "CREATE TABLE " + tableName + " ( ";
-    const objectPropertiesAggregator = [];
-    let queryValue = null;
-    Object.keys( objectProperties ).map( propertyName => {
-      const propertyValues = objectProperties[propertyName];
-      const isPrimary = typeof( propertyValues.isPrimaryKey ) !== "undefined" && propertyValues.isPrimaryKey;
-      queryValue = "";
-      const maxLength = typeof( propertyValues.maxLength ) !== "undefined" ? `(${propertyValues.maxLength || ""})` : "";
-      if( isPrimary )
-        queryValue = `${propertyName} ${specificity.autoIncrementName} PRIMARY KEY`;
-      else
-        queryValue = `${propertyName} ${propertyValues.type || "VARCHAR"}${maxLength}`;
-      objectPropertiesAggregator.push( queryValue );
-    });
-    if( objectPropertiesAggregator.length > 0 )
-      databaseQuery += objectPropertiesAggregator.join( " , " );
-    databaseQuery += " ) ";
-    return databaseQuery;
+    return queryBuilder.createTableQuery( tableName, objectProperties );
   }
 
   static suscribeObject( objectParameter ) {

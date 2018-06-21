@@ -8,26 +8,15 @@ class ObjectHelpers {
    */
   static generateWhereClause( objectToMap ) {
     const objectAttributes = Object.keys( objectToMap );
-    let attributeAggregator = [];
+    const retour = {};
     objectAttributes.map( function( currentAttribute, index ) {
       const objectValue = objectToMap[ currentAttribute.slice( 1, currentAttribute.length ) ];
       const haveNotValue = typeof( objectValue ) === "undefined" || !objectValue;
       if( haveNotValue )
         return;
-      attributeAggregator.push( currentAttribute.slice( 1, currentAttribute.length ) + " = " + "'" + objectValue + "'" );
+      retour[ currentAttribute.slice( 1, currentAttribute.length ) ] = objectValue;
     });
-    return attributeAggregator;
-  }
-
-  static generateInsertPlaceholder( objectToMap ) {
-    let lengthAttributeFilled = this.generateWhereClause( objectToMap ).length;
-    let query = [];
-    if( lengthAttributeFilled === 0 )
-      throw new Error( "Please fill field" );
-    for( let increment = 0 ; increment < lengthAttributeFilled ; increment++ ) {
-      query.push( "{" + increment + "}" );
-    }
-    return query.join(",");
+    return retour;
   }
 
   static convertQueryResultToObject( queryResult, objectType ) {
