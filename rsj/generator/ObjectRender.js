@@ -7,10 +7,10 @@ class ObjectRender {
     objectProperties.forEach( property => {
       const fieldName = property.split("").slice( 1, property.length ).join("");
       const isHiddenField = typeof( hiddenFields[ fieldName ] ) !== "undefined";
-      const type = isHiddenField ? "hidden" : "text";
-      formResult += `<fieldset class="m-form__field">
+      const classAdding = isHiddenField ? "hide" : "";
+      formResult += `<fieldset class="m-form__field ${classAdding}">
         <label class="m-form__label">${fieldName || ""} : </label>
-        <input type="${type}" name="${fieldName || ""}" value="${this[property] || ""}" class="m-form__input" />
+        <input type="text" name="${fieldName || ""}" value="${this[property] || ""}" class="m-form__input" />
       </fieldset>`;
     });
     formResult += `<p>
