@@ -32,6 +32,7 @@ class Personne extends ORMObject( ObjectRender ) {
     return "idUser";
   }
 
+  @ObjectTagger.hidden
   get idUser() {
     return this._idUser;
   }

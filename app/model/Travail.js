@@ -28,6 +28,7 @@ class Travail extends ORMObject( ObjectRender ) {
     return "idTravail";
   }
 
+  @ObjectTagger.hidden
   get idTravail() {
     return this._idTravail;
   }

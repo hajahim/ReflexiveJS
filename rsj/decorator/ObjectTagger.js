@@ -20,6 +20,12 @@ class ObjectTagger {
     }
   }
 
+  static hidden( target, key ) {
+    if( typeof( target.hiddenFields ) === "undefined" )
+        target.hiddenFields = {};
+      target.hiddenFields[key] = "true";
+  }
+
 }
 
 module.exports = ObjectTagger;
