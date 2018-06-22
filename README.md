@@ -2,7 +2,7 @@
 
 # ReflexiveJS #
 
-This is a library for ORM (Database and object) interaction implement with Javascript.
+This is a library for ORM (Database and object) interaction and extension for render object to view implement with Javascript.
 
 ## Requirement ##
 
@@ -24,7 +24,6 @@ Example connector implemented :
 Basic CRUD action implementation ( Create, update, delete ).
 When object extends this framework, it automatically have the CRUD action function auto implemented
 - **save()**
-- **findAll()**
 - **find()**
 - **delete()**
 - **update()**
