@@ -28,14 +28,6 @@ class ObjectHelpers {
     return newObject;
   }
 
-  static getterNameProperty( attributeName ) {
-    return "get" + attributeName.charAt(0).toUpperCase() + attributeName.slice(1);
-  }
-
-  static setterNameProperty( attributeName ) {
-    return "set" + attributeName.charAt(0).toUpperCase() + attributeName.slice(1);
-  }
-
   static findProperty( objectToMap, propertyName ) {
     let method = null;
     try {
