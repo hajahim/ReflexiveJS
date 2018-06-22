@@ -4,7 +4,6 @@ const Configuration = require( "./config/ConfigurationParser" );
 const GenericSQL = require("./helpers/GenericSQL");
 const currentDriver = Configuration.getCurrentDriver();
 const connectorConfiguration = Configuration.getConnectionStringData();
-const specificity = Configuration.getSpecificity();
 const Connector = require( `./database/${currentDriver}` );
 
 const DataBaseConnector = new Connector( connectorConfiguration );
