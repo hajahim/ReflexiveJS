@@ -11,12 +11,6 @@ const queryBuilder = new GenericSQL( Configuration.getConnectionDriver() );
 
 class ORMTranslator {
 
-  static findAll( objectToMap ) {
-    const className = objectToMap.constructor.name;
-    const result = DataBaseConnector.queryDatabase( queryBuilder.selectAllDataQuery( className ) );
-    return result;
-  }
-
   static findByParameter( objectToMap ) {
     const tableName = objectToMap.constructor.name;
     const whereClause = ObjectHelpers.generateWhereClause( objectToMap );

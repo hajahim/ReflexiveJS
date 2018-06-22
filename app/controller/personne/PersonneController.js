@@ -4,7 +4,7 @@ class PersonneController {
 
   static userList( request, response ) {
     const personne = new Personne();
-    const userList = personne.findAll();
+    const userList = personne.find();
     userList.then( function( list ) {
       response.render('pages/user/userList.pug', { userList : list } );
     });

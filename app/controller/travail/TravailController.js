@@ -4,7 +4,7 @@ class TravailController {
 
   static travailList( request, response ) {
     const travail = new Travail();
-    const travailList = travail.findAll();
+    const travailList = travail.find();
     travailList.then( function( list ) {
       response.render('pages/travail/travailList.pug', { travailList : list } );
     });

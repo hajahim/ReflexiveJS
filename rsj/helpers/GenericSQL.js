@@ -22,10 +22,6 @@ class GenericSQL {
     return queryCreate.toString();
   }
 
-  selectAllDataQuery( tableName ) {
-    return this.knexInstance( tableName ).toString();
-  }
-
   insertDataQuery( tableName, values, idName ) {
     return this.knexInstance( tableName ).returning( idName ).insert( values ).toString();
   }
