@@ -7,22 +7,14 @@ const ORMObject = classCaller =>
     find() {
       return new Promise( ( resolve, reject ) => {
         ORMTranslator.findByParameter( this ).then( queryResult => {
-          resolve( ObjectHelpers.convertQueryResultToObject( queryResult[0], this ) );
-          reject( () => {
-            throw new Error( "Query Exception" );
-          });
-        });
-      });
-    }
-
-    findAll() {
-      return new Promise( ( resolve, reject ) => {
-        ORMTranslator.findAll( this ).then( queryResult => {
           const retour = [];
           queryResult.map( resultRow => {
             retour.push( ObjectHelpers.convertQueryResultToObject( resultRow, this ) );
           });
           resolve( retour );
+          reject( () => {
+            throw new Error( "Query Exception" );
+          });
           reject( () => {
             throw new Error( "Query Exception" );
           });

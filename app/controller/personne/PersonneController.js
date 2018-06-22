@@ -16,7 +16,7 @@ class PersonneController {
     const personne = new Personne( userID );
     const userToFind = personne.find();
     userToFind.then( function( currentUser ) {
-      response.render('pages/user/information.pug', { user : currentUser } );
+      response.render('pages/user/information.pug', { user : currentUser[0] } );
     });
   }
 

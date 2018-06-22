@@ -4,7 +4,6 @@ const ObjectRender = require( "../../rsj/generator/ObjectRender" );
 
 @ObjectTagger.Entity({
   idTravail: {
-    type: "INT",
     isPrimaryKey: true
   },
   libelle: {

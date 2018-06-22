@@ -16,7 +16,7 @@ class TravailController {
     const travail = new Travail( travailID );
     const travailToFind = travail.find();
     travailToFind.then( function( currentTravail ) {
-      response.render('pages/travail/information.pug', { travail : currentTravail } );
+      response.render('pages/travail/information.pug', { travail : currentTravail[0] } );
     });
   }
 

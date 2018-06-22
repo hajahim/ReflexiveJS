@@ -4,7 +4,6 @@ const ObjectTagger = require( "../../rsj/decorator/ObjectTagger" );
 
 @ObjectTagger.Entity({
   idUser: {
-    type: "INT",
     isPrimaryKey: true
   },
   nom: {
