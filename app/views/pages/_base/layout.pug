@@ -8,11 +8,12 @@ html(lang="en", dir="ltr")
   body
 
     .wrapper
+      include ../components/sidebar
+      section.m-content
+        include header.pug
 
-      include header.pug
-
-      main.l-main
-        block main
+        main.l-main
+          block main
 
       include footer.pug
       include scripts.pug

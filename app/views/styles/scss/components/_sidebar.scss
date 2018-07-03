@@ -1,0 +1,30 @@
+.m-sidebar {
+  background: $second-theme-presentation;
+  min-height: 100vh;
+  width: 250px;
+
+  &__title {
+    background: $default-white-color;
+    color: $first-theme-presentation;
+    font-size: map-get( $font-guid, "small" );
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+    height: 60px;
+  }
+
+  &__list {
+    list-style: none;
+
+    &__item {
+      padding-bottom: 20px;
+    }
+
+    &__link {
+      color: $first-theme-presentation;
+      text-decoration: none;
+    }
+  }
+}

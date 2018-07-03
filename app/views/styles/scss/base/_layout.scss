@@ -6,8 +6,9 @@ body {
 .l-header {
   background-color: $first-theme-presentation;
   display: flex;
+  justify-content: center;
   align-items: center;
-  height: 250px;
+  height: 60px;
   width: 100%;
 }
 
@@ -19,6 +20,20 @@ body {
 
 .l-main {
   padding: 0 20px;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  @media (min-width: 768px) {
+    flex-direction: row;
+  }
+}
+
+.m-content {
+  width: 100%;
 }
 
 .hide {
