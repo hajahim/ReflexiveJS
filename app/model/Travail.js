@@ -1,6 +1,7 @@
-const ORMObject = require( "../../rsj/ORMObject" );
-const ObjectTagger = require( "../../rsj/decorator/ObjectTagger" );
-const ObjectRender = require( "../../rsj/generator/ObjectRender" );
+const ReflexiveJS = require("reflexivejs");
+const ORMObject = ReflexiveJS.ORMObject;
+const ObjectTagger = ReflexiveJS.ObjectTagger;
+const ObjectRender = ReflexiveJS.ObjectRender;
 
 @ObjectTagger.Entity({
   idTravail: {
