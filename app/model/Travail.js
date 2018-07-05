@@ -1,7 +1,4 @@
-const ReflexiveJS = require("reflexivejs");
-const ORMObject = ReflexiveJS.ORMObject;
-const ObjectTagger = ReflexiveJS.ObjectTagger;
-const ObjectRender = ReflexiveJS.ObjectRender;
+import { ORMObject, ObjectTagger, ObjectRender } from "reflexivejs";
 
 @ObjectTagger.Entity({
   idTravail: {
